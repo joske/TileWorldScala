@@ -1,6 +1,11 @@
 *.class
 *.log
 
+# bloop and metals
+.bloop
+.bsp
+.metals
+
 # sbt specific
 .cache/
 .history/
@@ -11,8 +16,11 @@ lib_managed/
 src_managed/
 project/boot/
 project/plugins/project/
+project/
+build/
 
 # Scala-IDE specific
 .scala_dependencies
 .worksheet
 .idea
+.vscode
