@@ -60,6 +60,7 @@ class Agent(id: Int, location : Location) extends GridObject(id, location) {
     def pickTile(grid : Grid) {
         hasTile = true
         grid.removeTile(tile.get)
+        score = score + tile.get.score
         hole = grid.findClosestHole(location)
         printf("%s got hole %s\n", this, hole)        
         state = State.MoveToHole

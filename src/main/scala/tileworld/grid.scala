@@ -6,6 +6,8 @@ import scala.collection.mutable.ListBuffer
 class Grid {
     val COLS = 20
     val ROWS = 20
+    val MAG = 20
+
     val rand = new Random()
 
     var grid = Array.fill(COLS, ROWS)(None:Option[GridObject])

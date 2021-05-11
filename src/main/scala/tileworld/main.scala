@@ -11,7 +11,7 @@ object TileWorld extends App {
     val grid = new Grid()
     grid.init(5, 10)
     val ui = new UI(grid)
-    ui.size = new Dimension(500, 500)
+    ui.size = new Dimension(grid.COLS * grid.MAG + 200, grid.ROWS * grid.MAG)
     ui.visible = true
     while (true) {
         grid.print()
