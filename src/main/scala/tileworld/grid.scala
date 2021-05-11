@@ -72,8 +72,35 @@ class Grid {
         }
     }
 
+    def isValidLocation(l : Location) : Boolean = {
+        return l.c >= 0 && l.c < COLS && l.r >= 0 && l.r < ROWS && grid(l.c)(l.r) == None
+    }
+
     def getObject(c : Int, r : Int) : Option[GridObject] = {
         return grid(c)(r)
+    }
+
+    def moveAgent(agent : Agent, next : Location) {
+        val old = agent.location
+        grid(old.c)(old.r) = None
+        grid(next.c)(next.r) = Some(agent)
+        agent.location = next
+    }
+
+    def removeTile(t : Tile) {
+        val l = t.location;
+        grid(l.c)(l.r) = None
+        val i = tiles.indexOf(t)
+        tiles.remove(i)
+        createTile(t.id)
+    }
+
+    def removeHole(h : Hole) {
+        val l = h.location;
+        grid(l.c)(l.r) = None
+        val i = holes.indexOf(h)
+        holes.remove(i)
+        createHole(h.id)
     }
 
     def findClosestTile(l : Location) : Option[Tile] = {
