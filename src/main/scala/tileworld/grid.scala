@@ -28,14 +28,14 @@ class Grid {
         }
     }
 
-    def createAgent(id : Int) {
+    private def createAgent(id : Int) {
         val l = randomFreeLocation()
         val agent = new Agent(id, l)
         agents += agent
         grid(l.c)(l.r) = Some(agent)
     }
 
-    def createTile(id : Int) {
+    private def createTile(id : Int) {
         val l = randomFreeLocation()
         val score = rand.nextInt(6)
         val tile = new Tile(id, l, score)
@@ -43,20 +43,20 @@ class Grid {
         grid(l.c)(l.r) = Some(tile)
     }
 
-    def createHole(id : Int) {
+    private def createHole(id : Int) {
         val l = randomFreeLocation()
         val hole = new Hole(id, l)
         holes += hole
         grid(l.c)(l.r) = Some(hole)
     }
 
-    def createObstacle(id : Int) {
+    private def createObstacle(id : Int) {
         val l = randomFreeLocation()
         val obstacle = new Obstacle(id, l)
         grid(l.c)(l.r) = Some(obstacle)
     }
 
-    def randomFreeLocation() : Location = {
+    private def randomFreeLocation() : Location = {
         var c = rand.nextInt(COLS)
         var r = rand.nextInt(ROWS)
         while (grid(c)(r) == Some) {
@@ -64,6 +64,42 @@ class Grid {
             r = rand.nextInt(ROWS)
         }
         return new Location(c, r)
+    }
+
+    def update() {
+        for (a <- agents) {
+            a.update(this);
+        }
+    }
+
+    def getObject(c : Int, r : Int) : Option[GridObject] = {
+        return grid(c)(r)
+    }
+
+    def findClosestTile(l : Location) : Option[Tile] = {
+        var best : Option[Tile] = None
+        var dist = Int.MaxValue
+        for (t <- tiles) {
+            val d = t.location.distance(l)
+            if (d < dist) {
+                dist = d
+                best = Some(t)
+            }
+        }
+        return best
+    }
+
+    def findClosestHole(l : Location) : Option[Hole] = {
+        var best : Option[Hole] = None
+        var dist = Int.MaxValue
+        for (h <- holes) {
+            val d = h.location.distance(l)
+            if (d < dist) {
+                dist = d
+                best = Some(h)
+            }
+        }
+        return best
     }
 
     def print() {
