@@ -5,6 +5,7 @@ import scala.collection.mutable.HashSet
 import scala.collection.mutable.ListBuffer
 
 class Node (var location : Location, var parent : Option[Node], var score : Int) {
+    var path = new ListBuffer[Location]()
 }
 
 object AstarPath {
@@ -19,7 +20,7 @@ object AstarPath {
             openList.remove(current)
             if (current.location == to) {
                 // goal reached
-                return makePath(current, fromNode)
+                return current.path.toList
             }
             closedList += current
             checkNeighbor(grid, openList, closedList, current, Direction.Up, from, to)
@@ -38,23 +39,14 @@ object AstarPath {
             val h = nextLoc.distance(to);
             val g = current.location.distance(from) + 1;
             val child = new Node(nextLoc, Some(current), g + h);
+            child.path = current.path.clone()
+            child.path += nextLoc
             if (!closedList.contains(child)) {
-                if (openList.find((e:Node) => child.location == e.location) == None) {
+                if (openList.find((e:Node) => child.location == e.location && child.score < e.score) == None) {
                     openList += child;
                 }
             }
         }
     }
 
-    def makePath(end: Node, from : Node) : List[Location] = {
-        var list = ListBuffer.empty[Location]
-        var current = end
-        var parent = end.parent
-        while (current != from) {
-            list.prepend(current.location)
-            current = parent.get
-            parent = current.parent
-        }
-        return list.toList
-    }
 }

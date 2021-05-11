@@ -39,6 +39,7 @@ class Agent(id: Int, location : Location) extends GridObject(id, location) {
         }
         val path = AstarPath.path(grid, location, tile.get.location);
         if (path.length > 0) {
+            Console.println(s"$this got path $path")
             val nextLocation = path.head
             grid.moveAgent(this, nextLocation)
         }
@@ -52,6 +53,7 @@ class Agent(id: Int, location : Location) extends GridObject(id, location) {
         }
         val path = AstarPath.path(grid, location, hole.get.location);
         if (path.length > 0) {
+            Console.println(s"$this got path $path")
             val nextLocation = path.head
             grid.moveAgent(this, nextLocation)
         }
