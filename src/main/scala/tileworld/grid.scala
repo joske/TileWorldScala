@@ -4,8 +4,8 @@ import scala.util.Random
 import scala.collection.mutable.ListBuffer
 
 class Grid {
-    val COLS = 10
-    val ROWS = 10
+    val COLS = 20
+    val ROWS = 20
     val rand = new Random()
 
     var grid = Array.fill(COLS, ROWS)(None:Option[GridObject])
@@ -80,11 +80,14 @@ class Grid {
         return grid(c)(r)
     }
 
-    def moveAgent(agent : Agent, next : Location) {
+    def moveAgent(agent : Agent, next : Location) {        
         val old = agent.location
+        Console.println(s"$agent moving from $old to $next")
         grid(old.c)(old.r) = None
         grid(next.c)(next.r) = Some(agent)
-        agent.location = next
+        agent.location.r = next.r
+        agent.location.c = next.c
+        Console.println(s"$agent")
     }
 
     def removeTile(t : Tile) {

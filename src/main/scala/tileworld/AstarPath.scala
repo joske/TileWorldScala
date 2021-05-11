@@ -9,6 +9,7 @@ class Node (var location : Location, var parent : Option[Node], var score : Int)
 
 object AstarPath {
     def path(grid: Grid, from : Location, to : Location) : List[Location] = {
+        Console.println(s"finding path from $from to $to")
         var openList = TreeSet.empty[Node](Ordering.by(_.score))
         var closedList = HashSet[Node]();
         var fromNode = new Node(from, None, 0);

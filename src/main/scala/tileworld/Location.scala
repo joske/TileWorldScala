@@ -5,7 +5,7 @@ object Direction extends Enumeration {
     val Up, Down, Left, Right = Value
 }
 
-case class Location(c : Int, r : Int) {
+case class Location(var c : Int, var r : Int) {
     def nextLocation(d: Direction.Value ): Location = {
         return d match {
             case Direction.Up => new Location(c, r - 1)
