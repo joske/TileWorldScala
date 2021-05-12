@@ -4,8 +4,8 @@ import scala.util.Random
 import scala.collection.mutable.ListBuffer
 
 class Grid {
-    val COLS = 20
-    val ROWS = 20
+    val COLS = 40
+    val ROWS = 40
     val MAG = 20
 
     val rand = new Random()
@@ -39,7 +39,7 @@ class Grid {
 
     private def createTile(id : Int) {
         val l = randomFreeLocation()
-        val score = rand.nextInt(6)
+        val score = rand.nextInt(5) + 1
         val tile = new Tile(id, l, score)
         tiles += tile
         grid(l.c)(l.r) = Some(tile)
@@ -84,28 +84,34 @@ class Grid {
 
     def moveAgent(agent : Agent, next : Location) {        
         val old = agent.location
-        Console.println(s"$agent moving from $old to $next")
         grid(old.c)(old.r) = None
         grid(next.c)(next.r) = Some(agent)
         agent.location.r = next.r
         agent.location.c = next.c
-        Console.println(s"$agent")
     }
 
     def removeTile(t : Tile) {
         val l = t.location;
         grid(l.c)(l.r) = None
         val i = tiles.indexOf(t)
-        tiles.remove(i)
+        if (i >= 0) {
+            tiles.remove(i)
+        }
         createTile(t.id)
+        Console.println(s"removeTile: tiles=${tiles.length}")
+        assert(tiles.length == 20)
     }
 
     def removeHole(h : Hole) {
         val l = h.location;
         grid(l.c)(l.r) = None
         val i = holes.indexOf(h)
-        holes.remove(i)
+        if (i >= 0) {
+            holes.remove(i)
+        }
         createHole(h.id)
+        Console.println(s"removeHole: holes=${holes.length}")
+        assert(holes.length == 20)
     }
 
     def findClosestTile(l : Location) : Option[Tile] = {

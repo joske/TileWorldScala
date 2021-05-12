@@ -9,15 +9,15 @@ import scala.swing.Orientation
 
 object TileWorld extends App {
     val grid = new Grid()
-    grid.init(5, 10)
+    grid.init(6, 20)
     val ui = new UI(grid)
-    ui.size = new Dimension(grid.COLS * grid.MAG + 200, grid.ROWS * grid.MAG)
+    ui.size = new Dimension(grid.COLS * grid.MAG + 200, grid.ROWS * grid.MAG + grid.MAG)
     ui.visible = true
     while (true) {
         grid.print()
         grid.update()
         ui.repaint()
-        Thread.sleep(1000)
+        Thread.sleep(200)
     }
 }
 

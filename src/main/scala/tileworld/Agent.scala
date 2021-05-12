@@ -32,12 +32,16 @@ class Agent(id: Int, location : Location) extends GridObject(id, location) {
     }
 
     def moveToTile(grid: Grid) {
+        if (grid.getObject(tile.get.location.c, tile.get.location.r) != tile) {
+            // our hole is gone
+            tile = grid.findClosestTile(location)
+        }
         if (tile.get.location == location) {
             // arrived
             pickTile(grid)
             return
         }
-        val path = AstarPath.path(grid, location, tile.get.location);
+        val path = AstarPath.path(grid, location, tile.get.location)
         if (path.length > 0) {
             Console.println(s"$this got path $path")
             val nextLocation = path.head
@@ -46,6 +50,10 @@ class Agent(id: Int, location : Location) extends GridObject(id, location) {
     }
 
     def moveToHole(grid : Grid) {
+        if (grid.getObject(hole.get.location.c, hole.get.location.r) != hole) {
+            // our hole is gone
+            hole = grid.findClosestHole(location)
+        }
         if (hole.get.location == location) {
             // arrived
             dumpTile(grid)
@@ -62,18 +70,20 @@ class Agent(id: Int, location : Location) extends GridObject(id, location) {
     def pickTile(grid : Grid) {
         hasTile = true
         grid.removeTile(tile.get)
-        score = score + tile.get.score
         hole = grid.findClosestHole(location)
         printf("%s got hole %s\n", this, hole)        
         state = State.MoveToHole
     }
 
     def dumpTile(grid : Grid) {
+        printf("%s dumptile\n", this)        
         hasTile = false
+        score = score + tile.get.score
         grid.removeHole(hole.get)
         hole = None
-        tile = None
-        state = State.Idle
+        tile = grid.findClosestTile(location)
+        printf("%s got tile %s\n", this, tile)
+        state = State.MoveToTile
     }
 
     override def toString(): String = {
