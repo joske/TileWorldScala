@@ -45,7 +45,7 @@ object AstarPath {
             child.path ++= current.path
             child.path += nextLoc
             if (!closedList.contains(child)) {
-                if (openList.find((e:Node) => child.location == e.location && child.score > e.score) == None) {
+                if (!openList.exists((e:Node) => child.location == e.location && child.score > e.score)) {
                     openList += child;
                 }
             }

@@ -29,14 +29,14 @@ class View(grid:Grid) extends Component {
                                 if (a.hasTile) {
                                     g.drawRect(x, y, grid.MAG, grid.MAG)
                                     g.drawOval(x, y, grid.MAG, grid.MAG)
-                                    g.drawString(s"${a.tile.get.score}", x + grid.MAG / 2, y + grid.MAG / 2)
+                                    g.drawString(s"${a.tile.get.score}", x + 8, y + 15)
                                 } else {
                                     g.drawRect(x, y, grid.MAG, grid.MAG)
                                 }
                             }
                             case t : Tile => {
                                 g.drawOval(x, y, grid.MAG, grid.MAG)
-                                g.drawString(s"${t.score}", x + grid.MAG / 2, y + grid.MAG / 2)
+                                g.drawString(s"${t.score}", x + 8, y + 15)
                             }
                             case _ : Hole => {
                                 g.fillOval(x, y, grid.MAG, grid.MAG)

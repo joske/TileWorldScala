@@ -90,9 +90,9 @@ class Grid {
         agent.location.c = next.c
     }
 
-    def removeTile(t : Tile) {
+    def removeTile(a: Agent, t : Tile) {
         val l = t.location;
-        grid(l.c)(l.r) = None
+        grid(l.c)(l.r) = Some(a)
         val i = tiles.indexOf(t)
         if (i >= 0) {
             tiles.remove(i)
@@ -102,9 +102,9 @@ class Grid {
         assert(tiles.length == 20)
     }
 
-    def removeHole(h : Hole) {
+    def removeHole(a: Agent, h : Hole) {
         val l = h.location;
-        grid(l.c)(l.r) = None
+        grid(l.c)(l.r) = Some(a)
         val i = holes.indexOf(h)
         if (i >= 0) {
             holes.remove(i)
